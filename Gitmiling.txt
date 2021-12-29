@@ -1,0 +1,90 @@
+cd:
+cd(英文全拼:change directory)命令用于切换当前工作目录。
+
+mkdir:
+mkdir(英文全拼:make directory)命令用于创建目录。
+
+pwd:
+pwd(英文全拼:print work directory) 命令用于显示工作目录。
+
+查看文件内容：cat readme.txt
+
+编辑文件：
+1，touch+文件名，直接新建一个文件
+2，vi+文件名，新建一个文件并进入编辑状态（如果文件已存在，则直接进入编辑状态）
+
+vi其实是linux的一个文本编辑器，所以 vi+文件名 后，其实是进入vi程序了。
+
+pwd：命令用于显示当前目录
+
+把文件添加到仓库：git add readme.txt
+查看详细内容：cat readme.txt
+把文件提交到仓库：git commit -m ""
+查看工作区和版本库里面最新版本的区别：git diff HEAD -- readm
+删除一个文件:git rm test.txt
+另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：$ git checkout -- test.txt
+
+保存编辑：
+按下Esc键，然后按shift+‘;’号，再输入wq!保存
+
+查看修改的结果：
+我们时刻掌握仓库当前的状态:git status
+
+git diff命令查看上次的修改
+版本控制系统肯定有某个命令可以告诉我们历史记录，在Git中，我们用git log命令查看：
+版本控制系统肯定有某个命令可以告诉我们版本历史记录，在Git中，我们用git log命令查看或者 git log --pretty=oneline
+
+ 
+e475afc93c209a690c39c13a46716e8fa000c366 add distributed
+类似于1094adb...的是commit id（版本号)
+
+回到某个版本:$ git reset --hard HEAD^
+上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100
+指定回到未来的某个版本:git reset --hard  1094a(id名)   指
+
+git reflog用来记录你的每一次命令
+
+用git diff HEAD -- readme.txt命令可以查看工作区和版本库里面最新版本的区别
+
+命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销
+用命令git reset HEAD <file>可以把暂存区的修改撤销掉（unstage），重新放回工作区
+
+
+删除远程库
+如果添加的时候地址写错了，或者就是想删除远程库，可以用git remote rm <name>命令。
+使用前，建议先用《git remote -v查看远程库信息》
+
+1.创建SSH Key：
+  ssh-keygen -t rsa -C "youremail@example.com"(邮箱名)
+你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。
+如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
+
+第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面：
+然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容：
+
+关联远程仓库：$ git remote add origin git@github.com:michaelliao/learngit.git
+从现在起，只要本地作了提交，就可以通过命令：$ git push origin master
+查看远程库信息：git remote -v
+删除远程库，根据名字删除，比如删除origin：$ git remote rm origin（git remote rm origin简写）
+克隆远程仓库到本地仓库：git clone git@github.com:michaelliao/gitskills.git（michaelliao改成自己的远程名字）
+Linux ls（英文全拼：list files）命令用于显示指定工作目录下之内容（列出目前工作目录所含之文件及子目录)。
+
+分支管理：
+查看分支：git branch
+
+创建分支：git branch <name>
+
+切换分支：git checkout <name>或者git switch <name>
+
+创建+切换分支：git checkout -b <name>或者git switch -c <name>
+
+合并某分支到当前分支：git merge <name>
+
+删除分支：git branch -d <name>
+
+标签管理：
+查看所有标签：git tag
+找到历史提交的commit id：git log --pretty=oneline --abbrev-commit
+某commit id上创建一个标签：git tag v0.9 f52c633
+查看标签信息：git show v0.9
+还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：$ git tag -a v0.1 -m "version 0.1 released" 1094adb
